@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sprint Dashboard</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Poppins", sans-serif;
+            font-weight: 500;
+            font-size: 16px;
+        }
+        *, ::before, ::after {
+            box-sizing: border-box;
+
+        }
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        a {
+            text-decoration: none;
+            cursor: pointer;
+        }
+        button {
+            border: none;
+            padding: 10px 20px;
+            background: linear-gradient(90deg, rgb(112, 19, 225), rgb(217, 0, 255));
+            color: #fff;
+            cursor: pointer;
+            border-radius: 30px;
+            margin: 5px 5px 5px 0px;
+        }
+        
+        button:hover {
+            background: linear-gradient(90deg, rgb(217, 0, 225), rgb(112, 19, 225));
+        }
+        .dashboard {
+            position: relative;
+        }
+        .sidebar {
+            background-color: #000;
+            padding: 25px;
+            position: fixed;
+            width: 19%;
+            height: 100%;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            color: #fff;
+        }
+        .side-content {
+            position: relative;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            height: 100vh;
+            margin: 30px 30px 30px 21%;
+            
+        }
+        .side-inner{
+           
+            padding: 30px;
+            height: 100%;
+           
+        }
+        
+        .side-content .projects {
+           text-align: center;
+           
+            transform: translate(50%, -50%);
+            top: 50%;
+            right: 50%;
+            position: absolute;
+        }
+        .popup {
+            position: fixed;
+            width: 0%;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            height: 100%;
+            background-color: #fff;
+            box-shadow: 0px 5px 10px #0806064d;
+            padding: 0px;
+            transition: all 0.5s;
+        }
+        .popup.active {
+            width: 20%;
+            padding: 20px;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+            color: rgb(112, 19, 225);
+            margin-bottom: 5px;
+        }
+        .popup input {
+            width: 100%;
+            padding: 10px 15px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            border: none;
+            box-shadow: 0px 0px 3px #00000057;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="dashboard">
+
+        <div class="sidebar">
+
+            <my-sidebar></my-sidebar>
+
+        </div>
+        <div class="side-content">
+            <div class="side-inner">
+                <!-- <top-menu></top-menu> -->
+               
+
+            <div class="projects">
+                <img src="img/th.jpg" style="max-width: 200px;margin-bottom: 25px;" alt="user" /><br>
+                <button type="button" id="pro-create">Create Project +</button>
+            </div>
+            <div class="popup">
+                <h2>Add Projects</h2>
+                <form>
+                    <label>Name</label>
+                    <input type="text" placeholder="enter name" id="name" />
+                    <label>Description</label>
+                    <input type="text" placeholder="enter  message" id="msg" />
+                    <div><button type="button" id="create">Create</button> <button type="button" id="cancel">Cancel</button></div>
+                </form> 
+            </div> 
+        </div>
+
+
+        </div>
+    </div>
+
+
+    <script>
+
+let btn1 = document.getElementById("pro-create");
+        let btn2 = document.getElementById("cancel");
+        let pop = document.querySelector(".popup");
+        let inputValue = document.getElementById("name");
+        let cr = document.getElementById("create");
+        let btn3 = document.querySelector(".header-menu");
+        let pro = document.querySelector(".projects");
+        
+        
+
+        class MyCustomElements extends HTMLElement {
+            constructor() {
+                super();
+                const shadowRoot = this.attachShadow ( { mode: 'open'});
+                const side = document.querySelector(".sidebar");
+                
+                side.innerHTML = `
+                <style> .sidebar ul a {
+                        color: #fff;
+                        transition: all 0.5s;
+                    }
+                    .sidebar ul a:hover {
+                        color: rgb(217, 0, 255);
+                        padding-left: 10px;
+                    }
+                    .sidebar ul li {
+                        margin-bottom: 10px;
+                    }
+                    .logo {
+                        font-size: 30px;
+                        color: #e35fff;
+                    }    
+                    </style>                
+                                     <div class="link">
+
+                                        <a href="#" class="logo">Sprints</a>
+                                    
+
+                                    <ul>
+                                        <li><a href="#">&spades; Home</a></li>
+                                        <li><a href="#">&spades; About</a></li>
+                                        <li><a href="#">&spades; Servces</a></li>
+                                        <li><a href="#">&spades; Portfolio</a></li>
+                                        <li><a href="#">&spades; Contact us</a></li>
+                                    
+                                    </ul>
+                                   
+                                    <h4>Projects</h4>
+                                    <ul id="newproject"></ul> 
+                                    </div>               
+                `;
+                
+
+            }
+        }
+        customElements.define("my-sidebar", MyCustomElements);
+
+        // class HeaderMenu extends HTMLElement {
+
+        //     constructor() {
+        //         super();
+        //         const shadowRoot = this.attachShadow ( { mode: 'open'});
+        //         const inner = document.querySelector(".side-inner");
+        //         inner.innerHTML = `
+        //         <style>
+        //             .menu li {
+        //             display: inline-block;
+        //             margin-right: 15px;
+        //             }
+        //             .menu li a {
+        //             background-color: rgb(112, 19, 225);
+        //             color: #fff;
+        //             padding: 5px 20px;
+        //             border-radius: 30px;
+        //             }
+
+        //             </style>
+        //          <div class="header-menu">
+        //             <ul class="menu">
+        //                 <li><a href="#one">One</a></li>
+        //                 <li><a href="#one">Two</a></li>
+        //                 <li><a href="#one">Three</a></li>
+        //                 <li><a href="#one">Four</a></li>
+        //                 </ul>
+        //             </div>
+
+        //         `
+
+        //     }
+        // }
+        // customElements.define("top-menu", HeaderMenu);
+
+        
+        btn1.addEventListener("click", function() {
+           pop.classList.add("active");
+        });
+    
+        btn2.addEventListener("click", function() {
+
+            pop.classList.remove("active");
+        });
+        cr.addEventListener("click", function() {
+            if (inputValue.value == "") {
+
+                alert("Please enter projects");
+            }
+            else {
+            let getoutput = inputValue.value;
+            let ul = document.getElementById("newproject");
+            let li = document.createElement("li"); 
+            let a = document.createElement("a");
+         
+            //console.log(getoutput);
+           let out =  ul.appendChild(li);
+           let mine = out.appendChild(a);
+           a.appendChild(document.createTextNode(inputValue.value));
+           li.appendChild(a);
+           pop.classList.remove("active");
+           inputValue.value = "";
+            }
+
+          
+           //pro.style.display = "none";
+        });
+    </script>
+</body>
+</html>
