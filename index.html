@@ -76,7 +76,7 @@
             right: 50%;
             position: absolute;
         }
-        .popup {
+        .popup, .popup1 {
             position: fixed;
             width: 0%;
             right: 0;
@@ -88,7 +88,7 @@
             padding: 0px;
             transition: all 0.5s;
         }
-        .popup.active {
+        .popup.active, .popup1.active {
             width: 20%;
             padding: 20px;
         }
@@ -98,13 +98,49 @@
             color: rgb(112, 19, 225);
             margin-bottom: 5px;
         }
-        .popup input {
+        .popup input, .popup1 input, .popup1 select {
             width: 100%;
             padding: 10px 15px;
             border-radius: 10px;
             margin-bottom: 10px;
             border: none;
             box-shadow: 0px 0px 3px #00000057;
+        }
+        .content-box {
+            padding: 20px;
+        }
+        .content {
+            display: none;
+        }
+        .content.active {
+            display: block;
+        }
+        .row {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            gap: 50px;            
+            max-width: 45%;
+            margin: 0 auto;
+        }
+        .row1 {
+            
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        } 
+        .row img {
+            width: 250px;
+            height: 250px;
+            object-fit: contain;
+        }
+        .row div, .row1 div {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+        }
+        .right-btn {
+            float: right;
         }
     </style>
 </head>
@@ -119,11 +155,65 @@
         </div>
         <div class="side-content">
             <div class="side-inner">
-                <!-- <top-menu></top-menu> -->
+                <div class="header-menu">
+                <top-menu></top-menu>
+                </div>
+               
+                <div class="content-box">
+
+                    <div class="content active">
+                        <div class="row">
+                        <!-- <div class="left">
+                            <img src="https://cdn.pixabay.com/photo/2017/08/28/17/55/computers-2690565_1280.png" alt="user" />
+                            <h2>Backlog</h2>
+                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's 
+                            standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to 
+                            make a type specimen book</p>
+                            <button type="button" id="pro-create1">Create Board +</button>
+                       </div> -->
+                       <div class="right">
+                        <img src="https://cdn.pixabay.com/photo/2023/11/29/12/29/kid-8419485_640.jpg" alt="user" />
+                        <h2>Sprint</h2>
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's 
+                        standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to 
+                        make a type specimen book</p>
+                        <button type="button" id="sprint">Create Sprint +</button>
+                   </div>
+
+                        </div>
+                    </div>
+                    <div class="content">
+                        <div class="row row1">
+                            <div class="todo">
+                                <h2>Todo (<span>0</span>)</h2>
+                            </div>
+                            <div class="inp">
+                                <h2>Inprogress (<span>0</span>)</h2>
+                            </div>
+                            <div class="done">
+                                <h2>Done (<span>0</span>)</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content">
+                        <h2>Report</h2>
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's 
+                            standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to 
+                            make a type specimen book</p>
+                        <button type="button" id="pro-create1">Create Project +</button>
+                    </div>
+                    <div class="content">
+                        <h2>Epic</h2>
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's 
+                            standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to 
+                            make a type specimen book</p>
+                        <button type="button" id="pro-create1">Create Project +</button>
+                    </div>
+                </div>
                
 
             <div class="projects">
-                <img src="https://cdn.pixabay.com/photo/2017/05/09/13/33/laptop-2298286_1280.png" style="max-width: 300px;margin-bottom: 20px;" alt="user" /><br>
+                <img src="https://cdn.pixabay.com/photo/2024/05/18/15/30/laptop-8770486_1280.png" style="max-width: 450px;margin-bottom: 25px;" alt="user" /><br>
                 <button type="button" id="pro-create">Create Project +</button>
             </div>
             <div class="popup">
@@ -134,6 +224,22 @@
                     <label>Description</label>
                     <input type="text" placeholder="enter  message" id="msg" />
                     <div><button type="button" id="create">Create</button> <button type="button" id="cancel">Cancel</button></div>
+                </form> 
+            </div> 
+            <div class="popup1">
+                <h2>Create Item</h2>
+                <form>
+                    <label>Name</label>
+                    <input type="text" placeholder="enter name" id="name" />
+                    <label>Description</label>
+                    <input type="text" placeholder="enter  message" id="msg" />
+                    <label>Description</label>
+                    <select id="select">
+                        <option value="Todo">Todo</option>
+                        <option value="Inprogress">Inprogress</option>
+                        <option value="Done">Done</option>
+                    </select>
+                    <div><button type="button" id="create">Create</button> <button type="button" id="cancel1">Cancel</button></div>
                 </form> 
             </div> 
         </div>
@@ -147,11 +253,17 @@
 
 let btn1 = document.getElementById("pro-create");
         let btn2 = document.getElementById("cancel");
+        let btn5 = document.getElementById("cancel1");
         let pop = document.querySelector(".popup");
+        let pop1 = document.querySelector(".popup1");
         let inputValue = document.getElementById("name");
         let cr = document.getElementById("create");
         let btn3 = document.querySelector(".header-menu");
         let pro = document.querySelector(".projects");
+        let content = document.querySelector(".content-box");
+        let btn4 = document.getElementById("sprint");
+        btn3.style.display = "none";
+        content.style.display = "none";
         
         
 
@@ -195,47 +307,50 @@ let btn1 = document.getElementById("pro-create");
                                     <h4>Projects</h4>
                                     <ul id="newproject"></ul> 
                                     </div>               
-                `;
+                `
                 
 
             }
         }
         customElements.define("my-sidebar", MyCustomElements);
 
-        // class HeaderMenu extends HTMLElement {
+        class HeaderMenu extends HTMLElement {
 
-        //     constructor() {
-        //         super();
-        //         const shadowRoot = this.attachShadow ( { mode: 'open'});
-        //         const inner = document.querySelector(".side-inner");
-        //         inner.innerHTML = `
-        //         <style>
-        //             .menu li {
-        //             display: inline-block;
-        //             margin-right: 15px;
-        //             }
-        //             .menu li a {
-        //             background-color: rgb(112, 19, 225);
-        //             color: #fff;
-        //             padding: 5px 20px;
-        //             border-radius: 30px;
-        //             }
+            constructor() {
+                super();
+                let shadowRoot = this.attachShadow ( { mode: 'open'});
+                let inner = document.querySelector(".header-menu");
+                inner.innerHTML = `
+                <style>
+                    .menu li {
+                    display: inline-block;
+                    margin-right: 15px;
+                    }
+                    .menu li a {
+                    background-color: rgb(188 182 186 / 21%);
+                    color: #000;
+                    padding: 5px 20px;
+                    border-radius: 30px;
+                    }
+                    .menu li a.active {
+                    background-color: #b416d6;
+                    color: #fff;
+                    }
 
-        //             </style>
-        //          <div class="header-menu">
-        //             <ul class="menu">
-        //                 <li><a href="#one">One</a></li>
-        //                 <li><a href="#one">Two</a></li>
-        //                 <li><a href="#one">Three</a></li>
-        //                 <li><a href="#one">Four</a></li>
-        //                 </ul>
-        //             </div>
+                    </style>
+                
+                    <ul class="menu">
+                        <li><a href="#backlog" class="active">Backlog</a></li>
+                        <li><a href="#board">Board</a></li>
+                        <li><a href="#report">Report</a></li>
+                        <li><a href="#epics">Epics</a></li>
+                        </ul>
+                    
+                `
 
-        //         `
-
-        //     }
-        // }
-        // customElements.define("top-menu", HeaderMenu);
+            }
+        }
+        customElements.define("top-menu", HeaderMenu);
 
         
         btn1.addEventListener("click", function() {
@@ -245,6 +360,14 @@ let btn1 = document.getElementById("pro-create");
         btn2.addEventListener("click", function() {
 
             pop.classList.remove("active");
+        });
+        btn4.addEventListener("click", function() {
+
+           pop1.classList.add("active");
+        });
+        btn5.addEventListener("click", function() {
+
+           pop1.classList.remove("active");
         });
         cr.addEventListener("click", function() {
             if (inputValue.value == "") {
@@ -264,11 +387,30 @@ let btn1 = document.getElementById("pro-create");
            li.appendChild(a);
            pop.classList.remove("active");
            inputValue.value = "";
+            pro.style.display = "none";
+            btn3.style.display = "block";
+            content.style.display = "block";
             }
 
           
-           //pro.style.display = "none";
+          
         });
+
+        let tabs = document.querySelectorAll(".menu a");
+        let all_content = document.querySelectorAll(".content");
+
+        tabs.forEach((tab, index) => {
+
+            tab.addEventListener("click", () => {
+
+                tabs.forEach ((tab) => { tab.classList.remove("active")});
+
+                tab.classList.add("active");
+
+                all_content.forEach(content => {content.classList.remove("active")});
+                all_content[index].classList.add("active");
+            })
+        })
     </script>
 </body>
 </html>
