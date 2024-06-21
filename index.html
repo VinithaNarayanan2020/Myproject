@@ -143,13 +143,17 @@
             color: rgb(112, 19, 225);
             margin-bottom: 5px;
         }
-        .popup input, .popup1 input, .popup1 select {
+        .popup input, .popup1 input, .popup1 select, .popup1 textarea {
             width: 100%;
             padding: 10px 15px;
             border-radius: 10px;
             margin-bottom: 10px;
             border: none;
             box-shadow: 0px 0px 3px #00000057;
+        }
+        .popup1 textarea {
+            height: 100px;
+            resize: none;
         }
         .content-box {
             padding: 20px;
@@ -188,11 +192,16 @@
             height: 250px;
             object-fit: contain;
         }
-        .row div, .row1 div {
+        .row div, .row1 .done, .row1 .todo, .row1 .inp {
             border: 1px solid #ddd;
             border-radius: 10px;
             padding: 20px;
             text-align: center;
+        }
+        .row1 b {
+            background: #ccccccb3;
+            padding: 5px 10px;
+            border-radius: 30px;
         }
         .right-btn {
             float: right;
@@ -241,6 +250,28 @@
         .top {
             position: relative;
         }
+        .todo h2 {
+            color: rgb(154, 11, 11);
+        }
+        .inp h2 {
+            color: rgb(218, 140, 14);
+        }
+        .done h2 {
+            color: rgb(7, 124, 30)
+            ;
+        }
+        .todo-content div, .inp-content div, .done-content div {
+            background-color: rgb(221 205 205 / 65%);
+            padding: 10px;
+            border-radius: 10px;
+            margin-bottom: 7px;
+        }
+        .inp-content div {
+            background-color: rgb(208 192 142 / 21%);
+        }
+        .done-content div {
+            background-color: rgb(105 242 147 / 21%);
+        }
     </style>
 </head>
 <body>
@@ -276,21 +307,30 @@
                         <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's 
                         standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to 
                         make a type specimen book</p>
-                        <button type="button" id="sprint">Create Sprint +</button>
+                        <button type="button" id="sprint">Create Board +</button>
                    </div>
 
                         </div>
                     </div>
                     <div class="content">
-                        <div class="row row1">
+                        <div class="row1" id="move">
                             <div class="todo">
-                                <h2>Todo (<span>0</span>)</h2>
+                                <h2>Todo (<span id="todo">0</span>)</h2>
+                                <div class="todo-content">
+
+                                </div>
                             </div>
                             <div class="inp">
-                                <h2>Inprogress (<span>0</span>)</h2>
+                                <h2>Inprogress (<span id="inp">0</span>)</h2>
+                                <div class="inp-content">
+                                    
+                                </div>
                             </div>
                             <div class="done">
-                                <h2>Done (<span>0</span>)</h2>
+                                <h2>Done (<span id="done">0</span>)</h2>
+                                <div class="done-content">
+                                    
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -329,7 +369,8 @@
             <div class="popup1">
                 <h2>Create Item</h2>
                <my-form></my-form>
-               <div><button type="button" id="create">Create</button> <button type="button" id="cancel1">Cancel</button></div>
+               <button id="cancelBtn">Cancel</button>
+               
             </div> 
 
             <div class="popupfull hiden" id="popup">
