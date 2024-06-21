@@ -6,6 +6,10 @@
     <title>Sprint Dashboard</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+        :root{
+            --primary: linear-gradient(90deg, rgb(112, 19, 225), rgb(217, 0, 255));
+            --secondary: linear-gradient(90deg, rgb(217, 0, 225), rgb(112, 19, 225));
+        }
         body {
             margin: 0;
             padding: 0;
@@ -15,6 +19,7 @@
         }
         *, ::before, ::after {
             box-sizing: border-box;
+            /* scroll-behavior: smooth; */
 
         }
         ul {
@@ -28,7 +33,7 @@
         button {
             border: none;
             padding: 10px 20px;
-            background: linear-gradient(90deg, rgb(112, 19, 225), rgb(217, 0, 255));
+            background: var(--primary);
             color: #fff;
             cursor: pointer;
             border-radius: 30px;
@@ -36,7 +41,7 @@
         }
         
         button:hover {
-            background: linear-gradient(90deg, rgb(217, 0, 225), rgb(112, 19, 225));
+            background: var(--secondary);
         }
         .dashboard {
             position: relative;
@@ -57,14 +62,14 @@
             background-color: #fff;
             border: 1px solid #ddd;
             border-radius: 10px;
-            height: 100vh;
+            min-height: 100vh;
             margin: 30px 30px 30px 21%;
             
         }
         .side-inner{
            
             padding: 30px;
-            height: 100%;
+            height: auto;
            
         }
         
@@ -92,6 +97,46 @@
             width: 20%;
             padding: 20px;
         }
+        #closeButton {
+            position: absolute;            
+            top: 15px;
+            right: 15px;
+        }
+        .section-box {
+            margin-top: 60px;
+        }
+        .section-box img {
+            clip-path: circle();
+            shape-outside: circle();
+        }
+        .popupfull {
+           
+            position: absolute;
+            top: 54%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border: 1px solid #ccc;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+            width: 90%;
+            animation-name: animatetop;
+            animation-duration: 0.4s;
+            height: 780px;
+            overflow-y: auto;
+           
+
+        }
+            
+            @keyframes animatetop {
+            from {top: -300px; opacity: 0}
+            to {top: 0; opacity: 1}
+            }
+        .popupfull.visible {
+           
+            padding: 20px;
+        }
         label {
             display: block;
             margin-top: 10px;
@@ -108,8 +153,18 @@
         }
         .content-box {
             padding: 20px;
+            display: none;
         }
         .content {
+            display: none;
+        }
+        .header-menu {
+            display: none;
+        }
+        .visible {
+            display: block;
+        }
+        .hiden {
             display: none;
         }
         .content.active {
@@ -141,6 +196,50 @@
         }
         .right-btn {
             float: right;
+        }
+        .overlay-menu {
+            border-bottom: 1px solid #ddd;
+            padding: 20px;
+            top: 0;
+            left: 0;
+            width: 100%;
+            position: sticky;
+            z-index: 100;
+            height: 68px;
+        }
+        .sticky {
+            background-color: #fff;
+            top: -21px;
+        }
+        .overlay-menu li {
+            display: inline-block;
+            margin-right: 10px;
+
+        }
+        .overlay-menu li a {
+            color: #000;
+            position: relative;
+            text-transform: capitalize;
+        }
+        .overlay-menu li a.active {
+            color: blueviolet;
+        }
+        .line {
+            position: absolute;
+            content: "";
+            width: 70px;
+            left: 20px;
+            top: 65px;
+            height: 5px;
+            border-radius: 10px;
+            background-color: blueviolet;
+            transition: all 0.5s ease-in-out;
+        }
+        .section-box  > div {
+            height: 600px;
+        }
+        .top {
+            position: relative;
         }
     </style>
 </head>
@@ -207,7 +306,8 @@
                         <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's 
                             standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to 
                             make a type specimen book</p>
-                        <button type="button" id="pro-create1">Create Project +</button>
+                        <button type="button" id="epic">View Epics</button>
+                        
                     </div>
                 </div>
                
@@ -228,20 +328,58 @@
             </div> 
             <div class="popup1">
                 <h2>Create Item</h2>
-                <form>
-                    <label>Name</label>
-                    <input type="text" placeholder="enter name" id="name" />
-                    <label>Description</label>
-                    <input type="text" placeholder="enter  message" id="msg" />
-                    <label>Description</label>
-                    <select id="select">
-                        <option value="Todo">Todo</option>
-                        <option value="Inprogress">Inprogress</option>
-                        <option value="Done">Done</option>
-                    </select>
-                    <div><button type="button" id="create">Create</button> <button type="button" id="cancel1">Cancel</button></div>
-                </form> 
+               <my-form></my-form>
+               <div><button type="button" id="create">Create</button> <button type="button" id="cancel1">Cancel</button></div>
             </div> 
+
+            <div class="popupfull hiden" id="popup">
+                <div class="top">
+                <div class="overlay-menu">
+                    <ul>
+                    <li><a href="#link1" class="active">section 1</a></li>
+                    <li><a href="#link2">section 2</a></li>
+                    
+                </ul>
+                    <div class="line"></div>
+                    <button id="closeButton">X</button>
+            </div>
+             
+              
+                <div class="section-box">
+                    <div id="link1">
+                        <img src="https://cdn.pixabay.com/photo/2017/05/09/13/33/laptop-2298286_1280.png" style="max-width: 250px; float: right;margin-left: 5px;"/>
+                        <h4>What is Lorem Ipsum?</h4>
+                        <p>The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, 
+                        content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as 
+                        their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. 
+                        Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</p>
+                        <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, 
+                        or randomised words which don't look even slightly believable. 
+                        If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text.</p>
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever 
+                        since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, 
+                        but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of 
+                        Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                    </div>
+                    <hr>
+                    <div id="link2">
+                        <img src="https://cdn.pixabay.com/photo/2024/02/05/02/53/cat-8553498_960_720.jpg" style="max-width: 250px; float: left;margin-left: 5px;"/>
+                        <h4>Why do we use it?</h4>                       
+                        <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, 
+                            or randomised words which don't look even slightly believable. 
+                            If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text.</p>
+                            <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, 
+                                or randomised words which don't look even slightly believable. 
+                                If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text.</p>
+                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever 
+                                    since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, 
+                                    but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of 
+                                    Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                    </div>
+                  
+                </div>
+            </div>
+        </div>
         </div>
 
 
@@ -249,168 +387,6 @@
     </div>
 
 
-    <script>
-
-let btn1 = document.getElementById("pro-create");
-        let btn2 = document.getElementById("cancel");
-        let btn5 = document.getElementById("cancel1");
-        let pop = document.querySelector(".popup");
-        let pop1 = document.querySelector(".popup1");
-        let inputValue = document.getElementById("name");
-        let cr = document.getElementById("create");
-        let btn3 = document.querySelector(".header-menu");
-        let pro = document.querySelector(".projects");
-        let content = document.querySelector(".content-box");
-        let btn4 = document.getElementById("sprint");
-        btn3.style.display = "none";
-        content.style.display = "none";
-        
-        
-
-        class MyCustomElements extends HTMLElement {
-            constructor() {
-                super();
-                const shadowRoot = this.attachShadow ( { mode: 'open'});
-                const side = document.querySelector(".sidebar");
-                
-                side.innerHTML = `
-                <style> .sidebar ul a {
-                        color: #fff;
-                        transition: all 0.5s;
-                    }
-                    .sidebar ul a:hover {
-                        color: rgb(217, 0, 255);
-                        padding-left: 10px;
-                    }
-                    .sidebar ul li {
-                        margin-bottom: 10px;
-                    }
-                    .logo {
-                        font-size: 30px;
-                        color: #e35fff;
-                    }    
-                    </style>                
-                                     <div class="link">
-
-                                        <a href="#" class="logo">Sprints</a>
-                                    
-
-                                    <ul>
-                                        <li><a href="#">&spades; Home</a></li>
-                                        <li><a href="#">&spades; About</a></li>
-                                        <li><a href="#">&spades; Servces</a></li>
-                                        <li><a href="#">&spades; Portfolio</a></li>
-                                        <li><a href="#">&spades; Contact us</a></li>
-                                    
-                                    </ul>
-                                   
-                                    <h4>Projects</h4>
-                                    <ul id="newproject"></ul> 
-                                    </div>               
-                `
-                
-
-            }
-        }
-        customElements.define("my-sidebar", MyCustomElements);
-
-        class HeaderMenu extends HTMLElement {
-
-            constructor() {
-                super();
-                let shadowRoot = this.attachShadow ( { mode: 'open'});
-                let inner = document.querySelector(".header-menu");
-                inner.innerHTML = `
-                <style>
-                    .menu li {
-                    display: inline-block;
-                    margin-right: 15px;
-                    }
-                    .menu li a {
-                    background-color: rgb(188 182 186 / 21%);
-                    color: #000;
-                    padding: 5px 20px;
-                    border-radius: 30px;
-                    }
-                    .menu li a.active {
-                    background-color: #b416d6;
-                    color: #fff;
-                    }
-
-                    </style>
-                
-                    <ul class="menu">
-                        <li><a href="#backlog" class="active">Backlog</a></li>
-                        <li><a href="#board">Board</a></li>
-                        <li><a href="#report">Report</a></li>
-                        <li><a href="#epics">Epics</a></li>
-                        </ul>
-                    
-                `
-
-            }
-        }
-        customElements.define("top-menu", HeaderMenu);
-
-        
-        btn1.addEventListener("click", function() {
-           pop.classList.add("active");
-        });
-    
-        btn2.addEventListener("click", function() {
-
-            pop.classList.remove("active");
-        });
-        btn4.addEventListener("click", function() {
-
-           pop1.classList.add("active");
-        });
-        btn5.addEventListener("click", function() {
-
-           pop1.classList.remove("active");
-        });
-        cr.addEventListener("click", function() {
-            if (inputValue.value == "") {
-
-                alert("Please enter projects");
-            }
-            else {
-            let getoutput = inputValue.value;
-            let ul = document.getElementById("newproject");
-            let li = document.createElement("li"); 
-            let a = document.createElement("a");
-         
-            //console.log(getoutput);
-           let out =  ul.appendChild(li);
-           let mine = out.appendChild(a);
-           a.appendChild(document.createTextNode(inputValue.value));
-           li.appendChild(a);
-           pop.classList.remove("active");
-           inputValue.value = "";
-            pro.style.display = "none";
-            btn3.style.display = "block";
-            content.style.display = "block";
-            }
-
-          
-          
-        });
-
-        let tabs = document.querySelectorAll(".menu a");
-        let all_content = document.querySelectorAll(".content");
-
-        tabs.forEach((tab, index) => {
-
-            tab.addEventListener("click", () => {
-
-                tabs.forEach ((tab) => { tab.classList.remove("active")});
-
-                tab.classList.add("active");
-
-                all_content.forEach(content => {content.classList.remove("active")});
-                all_content[index].classList.add("active");
-            })
-        })
-    </script>
+    <script src="index.js"></script>
 </body>
 </html>
