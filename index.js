@@ -1,7 +1,7 @@
       
         let btn1 = document.getElementById("pro-create");
         let btn2 = document.getElementById("cancel");
-        let btn5 = document.getElementById("cancel1");
+        let btn5 = document.getElementById("cancelBtn");
         let pop = document.querySelector(".popup");
         let pop1 = document.querySelector(".popup1");
         let inputValue = document.getElementById("name");
@@ -127,17 +127,18 @@
                render() {
                
                 this.innerHTML = `
-                 <form>
+                 <form id="dataform">
                     <label>Name</label>
-                    <input type="text" placeholder="enter name" id="name" />
+                    <input type="text" placeholder="enter name" id="newname" />
                     <label>Description</label>
-                    <input type="text" placeholder="enter  message" id="msg" />
-                    <label>Description</label>
+                    <textarea type="text" rows="5" id="newmsg" ></textarea>
+                    <label>Choose Type</label>
                     <select id="select">
                         <option value="Todo">Todo</option>
                         <option value="Inprogress">Inprogress</option>
                         <option value="Done">Done</option>
                     </select>
+                    <button type="submit" id="insert">Create</button> 
                    
                 </form> 
                 
@@ -276,6 +277,73 @@
         
        
         popup.addEventListener("scroll", updateHeaderPosition);
+
+        let myform = document.getElementById("dataform");
+        let myname = document.getElementById("newname");
+        let mymsg = document.getElementById("newmsg");
+        let dropdown = document.getElementById("select");
+
+     document.addEventListener('DOMContentLoaded', function() {
+        myform.addEventListener("submit", (e)=> {
+
+            e.preventDefault();
+          
+
+            let todo = document.querySelector(".todo .todo-content");
+            let inp = document.querySelector(".inp .inp-content");
+            let done = document.querySelector(".done .done-content");
+           // let move = document.getElementById("move");
+          
+            let span1 = document.getElementById("todo");
+            let span2 = document.getElementById("inp");
+            let span3 = document.getElementById("done");
+
+            let item = document.createElement("div");
+            let data1 = myname.value;
+            let data2 = mymsg.value;
+            let data3 = dropdown.value;
+            let htmlData = `
+            <h4>${data1}</h4>
+            <p>${data2}</p>
+            <p>Sprint Type: <b>${data3}</b></p>
+
+            `;
+            console.log(htmlData);
+            item.innerHTML += htmlData;
+            if ( data1 == "" || data2 == "" || data3 == "") {
+                alert("please enter your Board name");
+            }
+            else {
+                if (data3 == "Todo") {
+                    todo.appendChild(item);
+                    let check_todolen = document.querySelectorAll(".todo-content div");                
+                    txt1 = document.createTextNode(check_todolen.length);
+                    span1.innerText = txt1.textContent;
+                    alert("Board Item created successfully. Please view Board section");
+                    
+                    
+                }
+                if (data3 == "Inprogress") {
+                    inp.appendChild(item);
+                    let check_inplen = document.querySelectorAll(".inp-content div");                
+                    txt2 = document.createTextNode(check_inplen.length);
+                    span2.innerText = txt2.textContent;
+                
+                    }
+                if (data3 == "Done") {
+                    done.appendChild(item);
+                    let check_donelen = document.querySelectorAll(".done-content div");                
+                    txt3 = document.createTextNode(check_donelen.length);
+                    span3.innerText = txt3.textContent;
+                    
+                }
+               
+            }
+        
+            myform.reset();
+        });
+       
+    });
 
 
     
