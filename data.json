@@ -1,0 +1,75 @@
+{
+    "users":[
+        { 
+            "id": 1, 
+            "name": "Leanne Graham", 
+            "des": "Contrary to popular belief, Lorem Ipsum is not simply random text.", 
+            "type": "Todo"
+        
+        },
+        { 
+            "id": 2, 
+            "name": "Ervin Howell", 
+            "des": "Lorem Ipsum is simply dummy text of the printing and typesetting industry.", 
+            "type": "InProgress"
+        
+        },
+        { 
+            "id": 3, 
+            "name": "Alice", 
+            "des": "Contrary to popular belief, Lorem Ipsum is not simply random text.", 
+            "type": "Done"
+        
+        },
+        { 
+            "id": 4, 
+            "name": "Antonette", 
+            "des": "Lorem Ipsum is simply dummy text of the printing and typesetting industry.", 
+            "type": "InProgress"
+        
+        },
+        { 
+            "id": 5, 
+            "name": "Gwenborough", 
+            "des": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.", 
+            "type": "Todo"
+        
+        },
+        { 
+            "id": 6, 
+            "name": "Clementine Bauch", 
+            "des": "Contrary to popular belief, Lorem Ipsum is not simply random text.", 
+            "type": "Done"
+        
+        },
+        { 
+            "id": 7, 
+            "name": "Alice", 
+            "des": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.", 
+            "type": "InProgress"
+        
+        },
+        { 
+            "id": 8, 
+            "name": "Samantha", 
+            "des": "Lorem Ipsum is simply dummy text of the printing and typesetting industry.", 
+            "type": "Todo"
+        
+        },
+        { 
+            "id": 9, 
+            "name": "Patricia Lebsack", 
+            "des": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.", 
+            "type": "InProgress"
+        
+        },
+        { 
+            "id": 10, 
+            "name": "Kamren", 
+            "des": "Lorem Ipsum is simply dummy text of the printing and typesetting industry.", 
+            "type": "Done"
+        
+        }
+       
+    ]
+  }
