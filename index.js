@@ -1,4 +1,3 @@
-      
         let btn1 = document.getElementById("pro-create");
         let btn2 = document.getElementById("cancel");
         let btn5 = document.getElementById("cancelBtn");
@@ -14,10 +13,7 @@
         let epic = document.getElementById("epic");
         let xbutton = document.getElementById("closeButton");
         let link_menu = document.querySelector(".overlay-menu");
-       
         
-        
-
         class MyCustomElements extends HTMLElement {
             constructor() {
                 super();
@@ -344,6 +340,62 @@
         });
        
     });
+
+    // const users = [
+    //     { id: 1, name: 'Alice', des: 'alice@example.com', type: 'Todo' },
+    //     { id: 2, name: 'Bob', des: 'bob@example.com', type: 'Todo' },
+    //     { id: 2, name: 'Bob', des: 'bob@example.com', type: 'Todo' },
+    //     { id: 2, name: 'Bob', des: 'bob@example.com', type: 'Todo' },
+    //     { id: 3, name: 'Charlie', des: 'charlie@example.com', type: 'Todo' },
+    //     { id: 2, name: 'Bob', des: 'bob@example.com', type: 'Todo' },
+    //     { id: 2, name: 'Bob', des: 'bob@example.com', type: 'Todo' }
+    //   ];
+    function fetchAndDisplayData() {
+    fetch("./data.json")
+    .then(res => res.json())
+    .then(data => { displayDataInTable(data.users)})
+    .catch(error => console.error('Error loading JSON file:', error));
+    }
+    
+    function displayDataInTable(data) {
+
+        let insertData = document.querySelector("#innerData tbody"); 
+            
+               
+        
+        data.forEach((user) => {
+                     
+          let tr = document.createElement("tr");
+          Object.values(user).forEach((obj) => {
+
+            let td = document.createElement("td");
+            td.textContent = obj;
+            if (td.textContent == "Todo") {
+                td.classList.add("orange"); 
+            } 
+            if (td.textContent == "InProgress") {
+                td.classList.add("blue"); 
+            } 
+            if (td.textContent == "Done") {
+                td.classList.add("green"); 
+            } 
+            tr.appendChild(td);
+           
+
+
+          });
+          insertData.appendChild(tr);
+
+        })
+
+
+    }
+    
+
+    const report_btn = document.querySelector("#report");
+    report_btn.addEventListener("click", fetchAndDisplayData);
+    
+    
 
 
     
