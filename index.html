@@ -143,13 +143,16 @@
             color: rgb(112, 19, 225);
             margin-bottom: 5px;
         }
-        .popup input, .popup1 input, .popup1 select, .popup1 textarea {
+        input, textarea, select {
             width: 100%;
             padding: 10px 15px;
             border-radius: 10px;
             margin-bottom: 10px;
             border: none;
             box-shadow: 0px 0px 3px #00000057;
+        }
+        textarea {
+            resize: none;
         }
         .popup1 textarea {
             height: 100px;
@@ -275,6 +278,7 @@
         table {
         width: 100%;
         border-collapse: collapse;
+        margin-top: 20px;
         }
 
         th, td {
@@ -294,6 +298,41 @@
         .green {
             color: rgb(10, 111, 8);
 
+        }
+        .task {
+            background: white;
+            color: black;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.15);
+            padding: 12px;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: move;
+        }
+        .card {
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.25);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            background: #f4f4f4;
+            padding: 12px;
+            border-radius: 4px;
+        }
+        .card h2 {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        .task h4 {
+            margin: 0px 0px 5px;
+        }
+        .task p {
+            margin: 0px;
+        }
+        .is-dragging {
+            scale: 1.05;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.25);
+            background: rgb(50, 50, 50);
+            color: white;
         }
     </style>
 </head>
@@ -316,22 +355,14 @@
 
                     <div class="content active">
                         <div class="row">
-                        <!-- <div class="left">
-                            <img src="https://cdn.pixabay.com/photo/2017/08/28/17/55/computers-2690565_1280.png" alt="user" />
-                            <h2>Backlog</h2>
+                            <div class="right">
+                            <img src="https://cdn.pixabay.com/photo/2023/11/29/12/29/kid-8419485_640.jpg" alt="user" />
+                            <h2>Sprint</h2>
                             <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's 
                             standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to 
                             make a type specimen book</p>
-                            <button type="button" id="pro-create1">Create Board +</button>
-                       </div> -->
-                       <div class="right">
-                        <img src="https://cdn.pixabay.com/photo/2023/11/29/12/29/kid-8419485_640.jpg" alt="user" />
-                        <h2>Sprint</h2>
-                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's 
-                        standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to 
-                        make a type specimen book</p>
-                        <button type="button" id="sprint">Create Board +</button>
-                   </div>
+                            <button type="button" id="sprint">Create Board +</button>
+                        </div>
 
                         </div>
                     </div>
@@ -363,6 +394,7 @@
                             standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to 
                             make a type specimen book</p>
                         <button type="button" id="report">Load the Data</button>
+                        <br>
                        <div id="tableData">
                         <table  id="innerData">
                             <tr><th>SNo</th><th>Name</th><th>Description</th><th>Status</th></tr>
@@ -380,6 +412,40 @@
                             make a type specimen book</p>
                         <button type="button" id="epic">View Epics</button>
                         
+                    </div>
+                    <div class="content">
+                        <form style="max-width: 600px;" id="todo-form">
+                            <label>Name</label>
+                            <input type="text" placeholder="enter name" id="todo-name" />
+                            <label>Description</label>
+                            <textarea type="text" rows="5" id="todo-msg"></textarea>
+                           <button type="submit" id="add">Add</button>
+                        </form>
+                        <br>
+                        <div class="row1 list">                            
+                            <div class="card" id="todocontent">
+                                <h2 class="orange">Todo</h2>
+                                <div class="task" draggable="true">
+                                    <h4>Binge 80 hours</h4>
+                                    <p>Lorem is ipsum</p>
+                                </div>                               
+                            </div>
+                            <div class="card">
+                                <h2 class="green">Inprogress</h2>
+                                <div class="task" draggable="true">
+                                    <h4>Binge 80 hours</h4>
+                                    <p>Lorem is ipsum</p>
+                                </div>                               
+                            </div>
+                            <div class="card">
+                                <h2 class="blue">Done</h2>
+                                <div class="task" draggable="true">
+                                    <h4>Game of Thrones</h4>
+                                    <p>Mine is ipsum</p>
+                                </div>
+                                
+                            </div>
+                        </div>
                     </div>
                 </div>
                
