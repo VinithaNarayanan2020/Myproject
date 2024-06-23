@@ -1,4 +1,8 @@
-        let btn1 = document.getElementById("pro-create");
+      document.addEventListener("DOMContentLoaded", (e) => {
+        console.log("DOM fully loaded and parsed.");
+
+      
+      let btn1 = document.getElementById("pro-create");
         let btn2 = document.getElementById("cancel");
         let btn5 = document.getElementById("cancelBtn");
         let pop = document.querySelector(".popup");
@@ -26,7 +30,19 @@
                render() {
                 
                 this.innerHTML = `
-                <style> .sidebar ul a {
+                <style> 
+                    .sidebar {
+                        background-color: #000;
+                        padding: 25px;
+                        position: fixed;
+                        width: 19%;
+                        height: 100%;
+                        top: 0;
+                        bottom: 0;
+                        left: 0;
+                        color: #fff;
+                    }
+                   .sidebar ul a {
                         color: #fff;
                         transition: all 0.5s;
                     }
@@ -42,7 +58,7 @@
                         color: #e35fff;
                     }    
                     </style>                
-                        <div class="link">
+                        <div class="sidebar">
 
                             <a href="#" class="logo">Sprints</a>
                                     
@@ -118,35 +134,118 @@
 
             constructor() {
                 super();
+
+                const shadowRoot = this.attachShadow({ mode: 'open' });                
+               // this.formData = [];
+
+                shadowRoot.innerHTML = `
+                <style>
+                 button {
+                    border: none;
+                    padding: 10px 20px;
+                    background: linear-gradient(90deg, rgb(112, 19, 225), rgb(217, 0, 255));
+                    color: #fff;
+                    cursor: pointer;
+                    border-radius: 30px;
+                    margin: 5px 5px 5px 0px;
+                }
+                
+                button:hover {
+                    background: linear-gradient(90deg, rgb(217, 0, 225), rgb(112, 19, 225));
+                }
+                 label {
+                    display: block;
+                    margin-top: 10px;
+                    color: rgb(112, 19, 225);
+                    margin-bottom: 5px;
+                }
+                input, textarea, select {
+                    width: 100%;
+                    padding: 10px 15px;
+                    border-radius: 10px;
+                    margin-bottom: 10px;
+                    border: none;
+                    box-shadow: 0px 0px 3px #00000057;
+                }
+                textarea {
+                    resize: none;
+                }
+            </style>
+                <form id="dataform">
+                   <label>Name</label>
+                   <input type="text" placeholder="enter name" id="newnamw" name="newname" />
+                   <label>Description</label>
+                   <textarea type="text" rows="5" id="newmsg" name="newmsg"></textarea>
+                   <label>Choose Type</label>
+                   <select id="select" name="select">
+                       <option value="Todo">Todo</option>
+                       <option value="Inprogress">Inprogress</option>
+                       <option value="Done">Done</option>
+                   </select>
+                   <button type="submit" id="insert">Create</button>   
+                                   
+               </form> 
+               
+               `;             
                
             }
-
-               connectedCallback() {
-
-                this.render();
-               }
-               render() {
+            connectedCallback() {
+                this.shadowRoot.querySelector('form').addEventListener('submit', this.handleSubmit.bind(this));
+            }
+            handleSubmit(e) {
                
-                this.innerHTML = `
-                 <form id="dataform">
-                    <label>Name</label>
-                    <input type="text" placeholder="enter name" id="newname" />
-                    <label>Description</label>
-                    <textarea type="text" rows="5" id="newmsg" ></textarea>
-                    <label>Choose Type</label>
-                    <select id="select">
-                        <option value="Todo">Todo</option>
-                        <option value="Inprogress">Inprogress</option>
-                        <option value="Done">Done</option>
-                    </select>
-                    <button type="submit" id="insert">Create</button> 
-                   
-                </form> 
-                
-                `
-               }
-           
+                e.preventDefault();
+                const formData = new FormData(e.target);
+                const data = Object.fromEntries(formData.entries());
+               // this.formData.push(data);
+                console.log(data);
+              
+                let todo = document.querySelector(".todo .todo-content");
+                let inp = document.querySelector(".inp .inp-content");
+                let done = document.querySelector(".done .done-content");                    
+                let span1 = document.getElementById("todo");
+                let span2 = document.getElementById("inp");
+                let span3 = document.getElementById("done");
 
+                let htmlData = `
+                    <div class="formData">
+                    <h4>${data.newname}</h4>
+                    <p>${data.newmsg}</p>
+                    <p>${data.select}</p>
+                    </div>
+
+                `;
+                console.log(htmlData);
+          
+            if ( data.newname == "" || data.newmsg == "" || data.select == "") {
+                alert("please enter your Board name");
+            }
+            else {
+                if (data.select == "Todo") {
+                    todo.innerHTML += htmlData; 
+                    let check_todolen = document.querySelectorAll(".todo-content div");                
+                    var txt1 = document.createTextNode(check_todolen.length);                  
+                    span1.innerText = txt1.textContent;
+                    alert("Board Item created successfully. Please view Board section");                   
+                    
+                }
+                if (data.select == "Inprogress") {
+                    inp.innerHTML += htmlData; 
+                    let check_inplen = document.querySelectorAll(".inp-content div");                
+                    var txt2 = document.createTextNode(check_inplen.length);
+                    span2.innerText = txt2.textContent;
+                
+                    }
+                if (data.select == "Done") {
+                    done.innerHTML += htmlData; 
+                    let check_donelen = document.querySelectorAll(".done-content div");                
+                    var txt3 = document.createTextNode(check_donelen.length);
+                    span3.innerText = txt3.textContent;                    
+                }
+               
+            }        
+               e.target.reset();
+            }
 
         }
         customElements.define("my-form", MyForm);
@@ -261,64 +360,64 @@
 
         // Borad tab data insert functionality start
 
-        let myform = document.getElementById("dataform");
-        let myname = document.getElementById("newname");
-        let mymsg = document.getElementById("newmsg");
-        let dropdown = document.getElementById("select");
+    //     let myform = document.getElementById("dataform");
+    //     let myname = document.getElementById("newname");
+    //     let mymsg = document.getElementById("newmsg");
+    //     let dropdown = document.getElementById("select");
 
-     document.addEventListener('DOMContentLoaded', function() {
-        myform.addEventListener("submit", (e)=> {
-            e.preventDefault();
-            let todo = document.querySelector(".todo .todo-content");
-            let inp = document.querySelector(".inp .inp-content");
-            let done = document.querySelector(".done .done-content");                    
-            let span1 = document.getElementById("todo");
-            let span2 = document.getElementById("inp");
-            let span3 = document.getElementById("done");
+    //  document.addEventListener('DOMContentLoaded', function() {
+    //     myform.addEventListener("submit", (e)=> {
+    //         e.preventDefault();
+    //         // let todo = document.querySelector(".todo .todo-content");
+    //         // let inp = document.querySelector(".inp .inp-content");
+    //         // let done = document.querySelector(".done .done-content");                    
+    //         // let span1 = document.getElementById("todo");
+    //         // let span2 = document.getElementById("inp");
+    //         // let span3 = document.getElementById("done");
 
-            let item = document.createElement("div");
-            let data1 = myname.value;
-            let data2 = mymsg.value;
-            let data3 = dropdown.value;
-            let htmlData = `
-            <h4>${data1}</h4>
-            <p>${data2}</p>
-            <p>Sprint Type: <b>${data3}</b></p>
+    //         // let item = document.createElement("div");
+    //         // let data1 = myname.value;
+    //         // let data2 = mymsg.value;
+    //         // let data3 = dropdown.value;
+    //         // let htmlData = `
+    //         // <h4>${data1}</h4>
+    //         // <p>${data2}</p>
+    //         // <p>Sprint Type: <b>${data3}</b></p>
 
-            `;
-            //console.log(htmlData);
-            item.innerHTML += htmlData;
-            if ( data1 == "" || data2 == "" || data3 == "") {
-                alert("please enter your Board name");
-            }
-            else {
-                if (data3 == "Todo") {
-                    todo.appendChild(item);
-                    let check_todolen = document.querySelectorAll(".todo-content div");                
-                    txt1 = document.createTextNode(check_todolen.length);
-                    span1.innerText = txt1.textContent;
-                    alert("Board Item created successfully. Please view Board section");                   
+    //         // `;
+    //         // //console.log(htmlData);
+    //         // item.innerHTML += htmlData;
+    //         // if ( data1 == "" || data2 == "" || data3 == "") {
+    //         //     alert("please enter your Board name");
+    //         // }
+    //         // else {
+    //         //     if (data3 == "Todo") {
+    //         //         todo.appendChild(item);
+    //         //         let check_todolen = document.querySelectorAll(".todo-content div");                
+    //         //         txt1 = document.createTextNode(check_todolen.length);
+    //         //         span1.innerText = txt1.textContent;
+    //         //         alert("Board Item created successfully. Please view Board section");                   
                     
-                }
-                if (data3 == "Inprogress") {
-                    inp.appendChild(item);
-                    let check_inplen = document.querySelectorAll(".inp-content div");                
-                    txt2 = document.createTextNode(check_inplen.length);
-                    span2.innerText = txt2.textContent;
+    //         //     }
+    //         //     if (data3 == "Inprogress") {
+    //         //         inp.appendChild(item);
+    //         //         let check_inplen = document.querySelectorAll(".inp-content div");                
+    //         //         txt2 = document.createTextNode(check_inplen.length);
+    //         //         span2.innerText = txt2.textContent;
                 
-                    }
-                if (data3 == "Done") {
-                    done.appendChild(item);
-                    let check_donelen = document.querySelectorAll(".done-content div");                
-                    txt3 = document.createTextNode(check_donelen.length);
-                    span3.innerText = txt3.textContent;                    
-                }
+    //         //         }
+    //         //     if (data3 == "Done") {
+    //         //         done.appendChild(item);
+    //         //         let check_donelen = document.querySelectorAll(".done-content div");                
+    //         //         txt3 = document.createTextNode(check_donelen.length);
+    //         //         span3.innerText = txt3.textContent;                    
+    //         //     }
                
-            }        
-            myform.reset();
-        });
+    //         // }        
+    //         // myform.reset();
+    //     });
        
-    });
+    // });
      // Borad tab data insert functionality end
 
 
@@ -452,6 +551,8 @@
 
   return closestTask;
 };
+
+});
 
 
 
