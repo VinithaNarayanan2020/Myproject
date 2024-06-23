@@ -46,17 +46,7 @@
         .dashboard {
             position: relative;
         }
-        .sidebar {
-            background-color: #000;
-            padding: 25px;
-            position: fixed;
-            width: 19%;
-            height: 100%;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            color: #fff;
-        }
+        
         .side-content {
             position: relative;
             background-color: #fff;
@@ -338,13 +328,10 @@
 </head>
 <body>
 
-    <div class="dashboard">
-
-        <div class="sidebar">
+    <div class="dashboard">       
 
             <my-sidebar></my-sidebar>
-
-        </div>
+        
         <div class="side-content">
             <div class="side-inner">
                 <div class="header-menu">
@@ -527,5 +514,28 @@
 
 
     <script src="index.js"></script>
+    <!-- <script>
+        const formDataComponent = document.querySelector('my-form');
+        let todo = document.querySelector(".todo .todo-content");   
+        let inp = document.querySelector(".inp .inp-content");
+            let done = document.querySelector(".done .done-content");                    
+            let span1 = document.getElementById("todo");
+            let span2 = document.getElementById("inp");
+            let span3 = document.getElementById("done");     
+       
+        formDataComponent.addEventListener('formSubmitted', function(event) {
+          const formData = event.detail;
+          
+         
+          let htmlData = `
+            <div class="form-data-item">
+              <h4>${formData.newname}</h4>
+              <p>${formData.newmsg}</p>
+              <p>${formData.select}</p>
+            </div>
+          `;
+          
+        });
+      </script> -->
 </body>
 </html>
